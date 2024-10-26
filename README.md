@@ -6,7 +6,7 @@ A basic lisp interpter written in Rust with support for arithmetic ops, define a
 
 `λ: (define a 1)`
 
-`λ: (+ 1 1)`
+`λ: (+ a 1)`
 
 `2`
 
