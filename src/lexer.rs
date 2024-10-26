@@ -1,7 +1,5 @@
-use std::fmt;
 use std::error::Error;
-
-
+use std::fmt;
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum Token {
@@ -17,7 +15,6 @@ pub struct LexerError {
 
 impl Error for LexerError {}
 
-
 impl fmt::Display for LexerError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "unexpected {}", self.ch)
@@ -27,7 +24,7 @@ impl fmt::Display for LexerError {
 impl fmt::Display for Token {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
-            Token::Integer(n) => write!(f, "{n}"), 
+            Token::Integer(n) => write!(f, "{n}"),
             Token::Symbol(s) => write!(f, "{s}"),
             Token::LParen => write!(f, "("),
             Token::RParen => write!(f, ")"),
@@ -38,7 +35,7 @@ impl fmt::Display for Token {
 pub fn tokenize(program: &str) -> Result<Vec<Token>, LexerError> {
     let program = program.replace("(", " ( ").replace(")", " ) ");
     let words = program.split_whitespace();
-    let mut tokens: Vec<Token>= Vec::new();
+    let mut tokens: Vec<Token> = Vec::new();
     for word in words {
         match word {
             "(" => tokens.push(Token::LParen),

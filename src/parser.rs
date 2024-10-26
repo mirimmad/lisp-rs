@@ -39,35 +39,35 @@ impl fmt::Display for Object {
                 }
                 write!(f, ")")
             }
-
         }
     }
-}   
+}
 
 pub fn parse(program: &str) -> Result<Object, String> {
+    if program.len() == 0 {
+        return Ok(Object::Void);
+    }
     let tokens = tokenize(program);
     if tokens.is_err() {
         return Err(String::from("Lexer Error"));
     }
     let mut rev_tokens = tokens.unwrap().into_iter().rev().collect::<Vec<Token>>();
     parse_list(&mut rev_tokens)
-
-
 }
 
 fn parse_list(tokens: &mut Vec<Token>) -> Result<Object, String> {
-    let  token = tokens.pop();
+    let token = tokens.pop();
     if token != Some(Token::LParen) {
         return Err(String::from("Expected '(' "));
     }
 
-    let mut objs:Vec<Object> = Vec::new();
+    let mut objs: Vec<Object> = Vec::new();
     while !tokens.is_empty() {
         let token = tokens.pop();
         if token == None {
             return Err(String::from("Reached unexpected end."));
         }
-        let t  = token.unwrap();
+        let t = token.unwrap();
         match t {
             Token::Integer(n) => objs.push(Object::Integer(n)),
             Token::Symbol(sym) => objs.push(Object::Symbol(sym)),
@@ -79,9 +79,8 @@ fn parse_list(tokens: &mut Vec<Token>) -> Result<Object, String> {
                 let sub_list = parse_list(tokens)?;
                 objs.push(sub_list);
             }
-
         }
     }
 
-    return Ok(Object::List(objs))
+    return Ok(Object::List(objs));
 }
