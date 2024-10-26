@@ -10,3 +10,6 @@ A basic lisp interpter written in Rust with support for arithmetic ops, define a
 
 `2`
 
+`λ: (if (> 5 2) (* 10 10) (/ 50 20))`
+
+`100`
